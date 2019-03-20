@@ -1,32 +1,16 @@
 #!/usr/bin/env bash
 
 ENV_DIR=${3:-}
-BUILD_DIR=$1
 
-git_ssh_key="$(cat $ENV_DIR/GIT_SSH_KEY)"
-git_ssh_host="$(cat $ENV_DIR/GIT_SSH_HOST)"
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh
 
-if [ "$git_ssh_key" != "" ] && [ "$git_ssh_host" != "" ]; then
-  echo "Detected SSH key and host for git. Adding SSH config" >&1
-  echo "" >&1
+echo -e "Host github.com\n"\
+        " IdentityFile $ENV_DIR/GIT_DEPLOY_KEY\n"\
+        " IdentitiesOnly yes\n"\
+        " UserKnownHostsFile=/dev/null\n"\
+        " StrictHostKeyChecking no"\
+        > ~/.ssh/config
 
-  # Ensure that we have the SSH directory
-  if [ ! -d $BUILD_DIR/.ssh ]; then
-    mkdir -p $BUILD_DIR/.ssh
-    chmod 700 $BUILD_DIR/.ssh
-  fi
-
-  # Load the git SSH key into a file
-  echo $git_ssh_key | base64 --decode > $BUILD_DIR/.ssh/git_key
-
-  # Change the permissions on the file to be read-write for this user
-  chmod 600 $BUILD_DIR/.ssh/git_key
-
-  # Set up the SSH config file
-  echo -e "Host $git_ssh_host\n"\
-          " IdentityFile ~/.ssh/git_key\n"\
-          " IdentitiesOnly yes\n"\
-          " UserKnownHostsFile=/dev/null\n"\
-          " StrictHostKeyChecking no"\
-          > $BUILD_DIR/.ssh/config
-fi
+echo "=== ssh config"
+cat ~/.ssh/config
