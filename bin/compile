@@ -18,10 +18,14 @@ echo    "Host github.com\n"\
         " IdentitiesOnly yes\n"\
         " UserKnownHostsFile=/dev/null\n"\
         " StrictHostKeyChecking no"\
+        " LogLevel DEBUG3"\
         > ~/.ssh/config
 
 echo "=== ssh config"
 cat ~/.ssh/config
+
+echo "=== ssh github"
+ssh -vvvvvvvvvvvvv git@github.com
 
 echo "=== git ls-remote"
 git ls-remote -h -t ssh://git@github.com/revupsw/emerge_nfp.git
