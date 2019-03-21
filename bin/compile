@@ -4,6 +4,7 @@ ENV_DIR=${3:-}
 
 mkdir -p ~/.ssh
 chmod 700 ~/.ssh
+echo >> $ENV_DIR/GIT_DEPLOY_KEY
 
 echo -e "Host github.com\n"\
         " IdentityFile $ENV_DIR/GIT_DEPLOY_KEY\n"\
