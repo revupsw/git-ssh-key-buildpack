@@ -1,6 +1,12 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
+
+set -x
 
 ENV_DIR=${3:-}
+env | sort
+pwd
+ls -l
+ls -l $ENV_DIR/GIT_DEPLOY_KEY
 
 mkdir -p ~/.ssh
 chmod 700 ~/.ssh
@@ -14,3 +20,6 @@ echo -e "Host github.com\n"\
 
 echo "=== ssh config"
 cat ~/.ssh/config
+
+echo "=== git ls-remote"
+git ls-remote -h -t ssh://git@github.com/revupsw/emerge_nfp.git
