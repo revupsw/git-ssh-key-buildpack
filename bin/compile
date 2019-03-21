@@ -8,10 +8,12 @@ pwd
 ls -l
 ls -l $ENV_DIR/GIT_DEPLOY_KEY
 
+set -e
+
 mkdir -p ~/.ssh
 chmod 700 ~/.ssh
 
-echo -e "Host github.com\n"\
+echo    "Host github.com\n"\
         " IdentityFile $ENV_DIR/GIT_DEPLOY_KEY\n"\
         " IdentitiesOnly yes\n"\
         " UserKnownHostsFile=/dev/null\n"\
